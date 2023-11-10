@@ -23,7 +23,7 @@ contract wetland_monitoring
               uint256 turbthreshold;
     }
     thresholds public Threshold;
-    mapping(address => bool) public eligibleForRewards;
+    mapping(address => bool) public eligibleForRewards;//Indicates whether the address is eligible for reward or not
     address public ethers;
     uint256 public reward;
     event ObservationRewarded(address indexed user, uint256 reward);
@@ -41,14 +41,12 @@ contract wetland_monitoring
     {
         address owner;
         owner = msg.sender;
-        require(msg.sender != owner, "Owner cannot submit observations.");
+        require(msg.sender != owner, "Owner cannot submit observations.");//Indicates that the owner cannot submit the observations
     }
     function validateobservation(bool isaccurate) public 
     {
         uint256 pH;
         uint256 DO;
-        uint256 temp;
-        uint256 humidity;
         uint256 SM;
         uint256 tds;
         uint256 turb;
@@ -58,7 +56,8 @@ contract wetland_monitoring
             tds <= Threshold.tdsthreshold || 
             DO<= Threshold.DOthreshold ||
             SM<= Threshold.SMthreshold
-        ) {
+        ) //Condition to check whether the observation provided by the user is accurate or not
+{
             eligibleForRewards[msg.sender] = true;
             emit ObservationRewarded(msg.sender, reward);
         }
