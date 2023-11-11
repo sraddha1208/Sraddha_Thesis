@@ -36,9 +36,11 @@ contract wetland_monitoring
         string userobs;
         bool isvalid;
       }
+      userobservation public uob;
       mapping(address => userobservation) public userobs;
     function submitObservation(string memory observation) public
     {
+        uob.userobs= _observation;
         address owner;
         owner = msg.sender;
         require(msg.sender != owner, "Owner cannot submit observations.");//Indicates that the owner cannot submit the observations
