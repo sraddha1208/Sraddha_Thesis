@@ -40,6 +40,8 @@ contract SensorDataIntegrity{
         emit SensorDataStored(msg.sender, dataId);
     }
 
+//Function to verify whether the sensor data is valid or not 
+
     function verifySensorData(address sensor, bytes32 dataId) public view returns (bool) 
     {
         return sensorDataId[sensor] == dataId;
