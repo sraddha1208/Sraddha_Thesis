@@ -29,7 +29,7 @@ contract wetland_monitoring
     }
     thresholds public Threshold;
     modifier onlyOwner() {
-    require(msg.sender == owner, "Only contract owner can call this function");//
+    require(msg.sender == owner, "Only contract owner can call this function");
     _;
 }//Used to restrict access to sethresholds function to only the owner of the contract 
 
