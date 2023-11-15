@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract wetland_monitoring
 {
     address public owner;//Declares a state variable used to store the ethereum address of the contract deployer
+    mapping(address => uint256) public userObservationCount;
     struct monitoringparameters
     {
         uint256 pH;
@@ -29,7 +30,7 @@ contract wetland_monitoring
     }
     thresholds public Threshold;
     modifier onlyOwner() {
-    require(msg.sender == owner, "Only contract owner can call this function");
+    require(msg.sender == owner, "Only contract owner can call this function");//
     _;
 }//Used to restrict access to sethresholds function to only the owner of the contract 
 
@@ -44,6 +45,18 @@ contract wetland_monitoring
         Threshold.DOthreshold = _dissolvedOxygenThreshold;
         Threshold.SMthreshold=_SMThreshold;
         Threshold.tdsthreshold=_tdsThreshold;
+    }
+    struct incentivemultiply
+    {
+        uint256 baseincentive;
+        uint256 incen_mult;
+    }
+    incentivemultiply public IM;
+
+    function incentivemultiplier(uint256 _baseincentive, uint256 _incen_mult) public onlyOwner
+    {
+        IM.baseincentive=_baseincentive;
+        IM.incen_mult=_incen_mult;
     }
 struct Record {
         string data;
@@ -107,12 +120,14 @@ struct Record {
     
     event NewObservation(uint observationId, address observer, string activity, uint timestamp);
     
-    function addObservation(string memory _activity, Pollutionstatus _status) public {
+    function addObservation(string memory _activity, Pollutionstatus _status) public
+     {
         userobservation.status= _status;
         uint observationId = observationCount++;
         observations[observationId] = Observation(msg.sender, _activity, block.timestamp, userobservation.status);
 
         emit NewObservation(observationId, msg.sender, _activity, block.timestamp);
+        userObservationCount[msg.sender]++;//Update the userobservartion count
     }
       
     function validateobservation(bool isvalid) public 
@@ -130,6 +145,8 @@ struct Record {
             eligibleForRewards[msg.sender] = true;
             emit ObservationRewarded(msg.sender, reward);
         }
+        //Calculate the incentive based on the observation count 
+         uint256 userIncentive = IM.baseincentive + userObservationCount[msg.sender] * IM.incen_mult;
     }
     function claimReward() external 
     {
