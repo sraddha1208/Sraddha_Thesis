@@ -130,7 +130,7 @@ struct Record {
         userObservationCount[msg.sender]++;//Update the userobservartion count
     }
       
-    function validateobservation(bool isvalid) public 
+   function validateobservation(bool ispolluted, bool isclean, bool isvalid) public 
     {
         if (
             MP.pH <= Threshold.pHthreshold ||
@@ -144,6 +144,22 @@ struct Record {
             isvalid= true;
             eligibleForRewards[msg.sender] = true;
             emit ObservationRewarded(msg.sender, reward);
+        }
+ else if (MP.pH > Threshold.pHthreshold ||
+            MP.turb > Threshold.turbthreshold ||
+            MP.tds > Threshold.tdsthreshold || 
+            MP.DO > Threshold.DOthreshold ||
+            MP.SM > Threshold.SMthreshold ||
+            MP.temp > Threshold.tempthreshold
+        )// Condition to check whether the wetland is clean
+        {
+            isclean=true;
+            eligibleForRewards[msg.sender] = true;
+            emit ObservationRewarded(msg.sender, reward);
+        }
+        else 
+        {
+            isvalid=false;
         }
         //Calculate the incentive based on the observation count 
          uint256 userIncentive = IM.baseincentive + userObservationCount[msg.sender] * IM.incen_mult;
