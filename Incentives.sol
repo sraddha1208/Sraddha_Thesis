@@ -46,18 +46,7 @@ contract wetland_monitoring
         Threshold.SMthreshold=_SMThreshold;
         Threshold.tdsthreshold=_tdsThreshold;
     }
-    struct incentivemultiply
-    {
-        uint256 baseincentive;
-        uint256 incen_mult;
-    }
-    incentivemultiply public IM;
-
-    function incentivemultiplier(uint256 _baseincentive, uint256 _incen_mult) public onlyOwner
-    {
-        IM.baseincentive=_baseincentive;
-        IM.incen_mult=_incen_mult;
-    }
+    
 struct Record {
         string data;
         uint256 timestamp;
@@ -104,6 +93,18 @@ struct Record {
     constructor(uint256 _RewardInEther) 
     {
         reward = _RewardInEther * 1 ether; // Convert to wei
+    }
+struct incentivemultiply
+    {
+        uint256 baseincentive;
+        uint256 incen_mult;
+    }
+    incentivemultiply public IM;
+
+    function incentivemultiplier(uint256 _baseincentive, uint256 _incen_mult) public onlyOwner
+    {
+        IM.baseincentive=_baseincentive;
+        IM.incen_mult=_incen_mult;
     }
     enum Pollutionstatus{Polluted,Clean}
 
