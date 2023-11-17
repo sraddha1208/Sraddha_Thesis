@@ -98,8 +98,7 @@ struct Record {
         require(recordId < recordCount, "Invalid record ID");
         records[recordId].timestamp = newTimestamp;
     }
-    mapping(address => bool) public eligibleForRewards;//Indicates whether the address is eligible for reward or not 
-    address public ethers;
+    mapping(address => bool) public eligibleForRewards;//Indicates whether the address is eligible for reward or not
     uint256 public reward;
     event ObservationRewarded(address indexed user, uint256 reward);
     constructor(uint256 _RewardInEther) 
