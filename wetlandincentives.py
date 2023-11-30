@@ -54,9 +54,8 @@ def main():
      activity, status = add_observation()
      print('Observation recorded')
      activity=input('Enter your observation:')
-     while True:
-         data= gensensordata()
-         print('Sensor Data', data)
+     data= gensensordata()
+     print('Sensor Data', data)
 
 if __name__ == "__main__":
     main()
