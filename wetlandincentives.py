@@ -50,8 +50,7 @@ def add_observation():
         print('Invalid input')
         return activity, status
 
- 
- def main():
+def main():
      activity, status = add_observation()
      print('Observation recorded')
      activity=input('Enter your observation:')
