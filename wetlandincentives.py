@@ -17,7 +17,8 @@ with open(compiled_contract_path) as file:
     a=contract.functions.sethresholds(8,8,25,60,1000).call()
     #b=contract.functions.addRecord().call()
     c=contract.functions.incentivemultiplier(1,2).call()
-    def gensensordata():
+
+def gensensordata():
         pH=random.uniform(1.0,14.0)
         DO=random.uniform(4.0,8.0)
         turb=random.uniform(10.0,100.0)
@@ -33,30 +34,30 @@ with open(compiled_contract_path) as file:
             }
         return sensor_data
 
-class pollution_status:
- clean=0
- polluted=1
- def add_observation(self):
+def add_observation():
     input_status=input('Is the wetland polluted? (yes/no):').lower()
     if input_status=='yes':
         activity=input('Enter your observation:')
-        status=pollution_status.polluted
+        status=1
         return activity, status
     elif input_status=='no':
-        status=pollution_status.clean
+        status=0
         activity=input('Enter your observation:')
         return activity, status
     else:
-         print('Invalid input')
+        activity=0
+        status=0
+        print('Invalid input')
+        return activity, status
 
- activity=input('Enter your observation:')
- def main():    
-    activity, status = add_observation()
-    print('Observation recorded')
- print("hiooo")
-while True:
-     data= gensensordata()
-     print('Sensor Data', data)
-     time.sleep(3600)
-     if __name__ == "__main__":
-            main()
+ 
+ def main():
+     activity, status = add_observation()
+     print('Observation recorded')
+     activity=input('Enter your observation:')
+     while True:
+         data= gensensordata()
+         print('Sensor Data', data)
+
+if __name__ == "__main__":
+    main()
