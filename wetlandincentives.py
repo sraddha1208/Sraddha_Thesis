@@ -32,27 +32,31 @@ with open(compiled_contract_path) as file:
             'timestamp':time.time()
             }
         return sensor_data
-    def main():
-        while True:
-            data= gensensordata()
-            print('Sensor Data', data)
-            time.sleep(3600)
 
 class pollution_status:
  clean=0
  polluted=1
- def add_observation():
+ def add_observation(self):
     input_status=input('Is the wetland polluted? (yes/no):').lower()
     if input_status=='yes':
+        activity=input('Enter your observation:')
         status=pollution_status.polluted
+        return activity, status
     elif input_status=='no':
         status=pollution_status.clean
+        activity=input('Enter your observation:')
+        return activity, status
     else:
          print('Invalid input')
 
-activity=input('Enter your observation:')
-activity, status = add_observation()
-print('Observation recorded')
-
-if __name__ == "__main__":
-    main()
+ activity=input('Enter your observation:')
+ def main():    
+    activity, status = add_observation()
+    print('Observation recorded')
+ print("hiooo")
+while True:
+     data= gensensordata()
+     print('Sensor Data', data)
+     time.sleep(3600)
+     if __name__ == "__main__":
+            main()
