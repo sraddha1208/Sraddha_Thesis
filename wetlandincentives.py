@@ -9,7 +9,7 @@ blockchain_address = 'http://127.0.0.1:9545'
 client= Web3(HTTPProvider(blockchain_address))
 client.eth.defaultAccount = client.eth.accounts[0]
 print(client.eth.defaultAccount)
-compiled_contract_path = 'build/contracts/wetland_monitoring.json'
+compiled_contract_path = f'F:/MTech_Files/Minor_Thesis/truffle/build/contracts/wetland_monitoring.json'
 deployed_contract_address = '0xa13fDe1e10Fe604b676A30DA18c32dE0a36689EC'
 with open(compiled_contract_path) as file:
     contract_json = json.load(file)
