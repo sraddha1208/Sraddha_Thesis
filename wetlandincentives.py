@@ -11,6 +11,7 @@ client.eth.defaultAccount = client.eth.accounts[0]
 print(client.eth.defaultAccount)
 compiled_contract_path = f'F:/MTech_Files/Minor_Thesis/truffle/build/contracts/wetland_monitoring.json'
 deployed_contract_address = '0xa13fDe1e10Fe604b676A30DA18c32dE0a36689EC'
+
 with open(compiled_contract_path) as file:
     contract_json = json.load(file)
     contract = client.eth.contract(address=deployed_contract_address, abi=contract_json)
@@ -50,12 +51,9 @@ def add_observation():
         print('Invalid input')
         return activity, status
 
-def main():
-     activity, status = add_observation()
-     print('Observation recorded')
-     activity=input('Enter your observation:')
-     data= gensensordata()
-     print('Sensor Data', data)
+activity, status = add_observation()
+print('Observation recorded')
+activity=input('Enter your observation:')
+data= gensensordata()
+print('Sensor Data', data)
 
-if __name__ == "__main__":
-    main()
