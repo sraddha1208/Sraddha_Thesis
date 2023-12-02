@@ -5,16 +5,18 @@ import math
 import time
 from eth_account import Account
 account_address = '0x77e7c143650c509cb047899a1d78a9b0efbbda51'
+to_address='0x8476007292628aff3538c5e0bab502a183a8068a'
 blockchain_address = 'http://127.0.0.1:9545'
 
 client= Web3(HTTPProvider(blockchain_address))
 client.eth.defaultAccount = client.eth.accounts[0]
+#client.eth.toAccount= client.eth.accounts[1]
 # print(client.eth.defaultAccount)
 compiled_contract_path = f'F:/MTech_Files/Minor_Thesis/truffle/build/contracts/wetland_monitoring.json'
 deployed_contract_address = '0xa13fDe1e10Fe604b676A30DA18c32dE0a36689EC'
 with open(compiled_contract_path) as file:
     contract_json = json.load(file)
-    contract = client.eth.contract(address=deployed_contract_address, abi=contract_json)
+    #contract = client.eth.contract(address=deployed_contract_address, abi=contract_json)
 
 def gensensordata():
         pH=random.uniform(1.0,14.0)
@@ -61,16 +63,16 @@ def validateobservation(status):
         or validate['turbidity']<= turb_threshold.start<=DO_threshold.stop-1 
         or validate['soil moisture']<= sm_threshold.start<=sm_threshold.stop-1
         or validate['totaldissolvedsolvents'] <= tds_threshold.start<=tds_threshold.stop-1
-        and add['status']==0):
+        and add['status']==1):
           flag=1
-          print('Observation Recorded is correct!!')
+          #print('Observation Recorded is correct!!')
           return flag
      elif(validate['pH']> pH_threshold.start<=pH_threshold.stop-1
         or validate['DO']> DO_threshold.start<=DO_threshold.stop-1 
         or validate['turb']> turb_threshold.start<=turb_threshold.stop-1
         or validate['SM']> sm_threshold.start<=sm_threshold.stop-1
         or validate['tds']> tds_threshold.start<=tds_threshold.stop-1
-        and add['status']==1): 
+        and add['status']==0): 
           flag=1
           #print('Observation recorded is correct!!')
           return flag
@@ -84,21 +86,21 @@ def reward(stat):
      validobs=validateobservation(stat)
      print('Checking if eligible for Reward....')
      if(validobs == 1):
-       r=contract.functions.claimReward().transact({'from': client.eth.defaultAccount}) 
+       #r=contract.functions.claimReward().transact({'from': client.eth.defaultAccount}) 
        print('Congrats!!! User Rewarded')
      elif(validobs == 0):
           print('Better Luck Next Time')
      else:
           print('Unknown Error') 
-          
 def main():
+     print('Welcome to the platform')
      activity, status = add_observation()
+     print('Observation Recorded')
      data= gensensordata()
      print('Sensor Data', data)
      valid=validateobservation(status)
      Rew=reward(status)
+     #payment=contract.functions.sendViaTransfer(to_address).transact({"from":account_address,"value":client.to_wei(1,'ether')})
 
 if __name__ == "__main__":
     main()
-
-
