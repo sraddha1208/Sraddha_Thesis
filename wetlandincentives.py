@@ -59,10 +59,10 @@ def validateobservation(status):
      validate=gensensordata()
      add= status
      if(validate['pH']<= pH_threshold.start<= pH_threshold.stop-1
-        or validate['dissolvedoxygen']<= DO_threshold.start<=DO_threshold.stop-1
-        or validate['turbidity']<= turb_threshold.start<=DO_threshold.stop-1 
-        or validate['soil moisture']<= sm_threshold.start<=sm_threshold.stop-1
-        or validate['totaldissolvedsolvents'] <= tds_threshold.start<=tds_threshold.stop-1
+        and validate['dissolvedoxygen']<= DO_threshold.start<=DO_threshold.stop-1
+        and validate['turbidity']<= turb_threshold.start<=DO_threshold.stop-1 
+        and validate['soil moisture']<= sm_threshold.start<=sm_threshold.stop-1
+        and validate['totaldissolvedsolvents'] <= tds_threshold.start<=tds_threshold.stop-1
         and add['status']==1):
           flag=1
           #print('Observation Recorded is correct!!')
