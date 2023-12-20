@@ -16,7 +16,8 @@ compiled_contract_path = f'F:/MTech_Files/Minor_Thesis/truffle/build/contracts/w
 deployed_contract_address = '0xa13fDe1e10Fe604b676A30DA18c32dE0a36689EC'
 with open(compiled_contract_path) as file:
     contract_json = json.load(file)
-    #contract = client.eth.contract(address=deployed_contract_address, abi=contract_json)
+     contract_abi = contract_json['abi'] 
+    contract = client.eth.contract(address=deployed_contract_address, abi=contract_json)
 
 def gensensordata():
         pH=random.uniform(1.0,14.0)
